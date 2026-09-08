@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MediDrone emergency medicine coordination prototype">
+  <title>MediDrone | Emergency Medicine Network</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="#home"><span class="brand-mark">✚</span> Medi<span>Drone</span></a>
+  <nav>
+    <a href="#home">Home</a><a href="#request">Emergency Request</a><a href="#pharmacies">Pharmacies</a>
+    <a href="#register">Register Pharmacy</a><a href="#dashboard">Control Center</a>
+  </nav>
+  <button class="nav-cta" onclick="scrollToId('request')">Request Aid</button>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">STUDENT INNOVATION • ROBOTICS + HEALTHCARE</div>
+    <h1>Emergency medicine, <span>coordinated faster.</span></h1>
+    <p>MediDrone is a prototype platform connecting emergency requests with verified pharmacies and a future drone-delivery network.</p>
+    <div class="hero-actions">
+      <button class="primary" onclick="scrollToId('request')">🚨 Request Emergency Aid</button>
+      <button class="secondary" onclick="scrollToId('register')">Register a Pharmacy</button>
+    </div>
+    <div class="hero-stats"><div><b id="statPharmacies">0</b><small>registered pharmacies</small></div><div><b id="statAvailable">0</b><small>medicine records</small></div><div><b>24/7</b><small>prototype coordination</small></div></div>
+  </div>
+  <div class="hero-visual">
+    <div class="radar"><div class="radar-ring r1"></div><div class="radar-ring r2"></div><div class="radar-sweep"></div>
+      <div class="map-pin p1">✚</div><div class="map-pin p2">✚</div><div class="map-pin p3">✚</div><div class="drone">🚁</div>
+    </div>
+    <div class="flight-card"><span class="live-dot"></span> Network simulation <b>ACTIVE</b><small>Drone route planning ready</small></div>
+  </div>
+</section>
+
+<section class="section problem">
+  <div class="section-heading"><div class="eyebrow">HOW IT WORKS</div><h2>One network. Four coordinated steps.</h2></div>
+  <div class="steps">
+    <article><span>01</span><h3>Emergency request</h3><p>A patient or clinic submits location, required medicine and urgency.</p></article>
+    <article><span>02</span><h3>Find nearby pharmacy</h3><p>The prototype ranks registered pharmacies using distance and medicine availability.</p></article>
+    <article><span>03</span><h3>Pharmacy confirmation</h3><p>A registered pharmacy confirms availability and prepares the package.</p></article>
+    <article><span>04</span><h3>Drone coordination</h3><p>A future drone service can receive the verified pickup and destination route.</p></article>
+  </div>
+</section>
+
+<section id="request" class="section request-section">
+  <div class="section-heading"><div class="eyebrow">EMERGENCY DESK</div><h2>Request emergency medicine assistance</h2><p>For prototype/demo use. Real deployment requires clinical, pharmacy, privacy and aviation approvals.</p></div>
+  <div class="panel form-panel">
+    <form id="requestForm">
+      <div class="grid two">
+        <label>Requester name<input id="reqName" required placeholder="Patient / clinic name"></label>
+        <label>Contact number<input id="reqPhone" required placeholder="+91 XXXXX XXXXX"></label>
+      </div>
+      <div class="grid two">
+        <label>Area / location<input id="reqLocation" required placeholder="e.g. Narhe, Pune"></label>
+        <label>Medicine required<input id="reqMedicine" required placeholder="Medicine name"></label>
+      </div>
+      <div class="grid two">
+        <label>Quantity<input id="reqQty" type="number" min="1" value="1" required></label>
+        <label>Urgency<select id="reqUrgency"><option>Critical</option><option>Urgent</option><option>Normal</option></select></label>
+      </div>
+      <label>Additional information<textarea id="reqNotes" rows="3" placeholder="Optional context for the pharmacist/clinic"></textarea></label>
+      <label class="check"><input id="reqConsent" type="checkbox" required> I understand this is a student prototype and not a substitute for emergency medical services.</label>
+      <button class="primary wide" type="submit">Create Emergency Request</button>
+    </form>
+    <div id="requestResult" class="result hidden"></div>
+  </div>
+</section>
+
+<section id="pharmacies" class="section">
+  <div class="section-heading inline"><div><div class="eyebrow">PHARMACY NETWORK</div><h2>Registered pharmacies</h2></div><input class="search" id="pharmacySearch" placeholder="Search area or pharmacy..."></div>
+  <div id="pharmacyList" class="cards"></div>
+</section>
+
+<section id="register" class="section register-section">
+  <div class="section-heading"><div class="eyebrow">JOIN THE NETWORK</div><h2>Register your pharmacy</h2><p>Add a pharmacy to the prototype database. Records are stored locally in this browser.</p></div>
+  <div class="panel form-panel">
+    <form id="pharmacyForm">
+      <div class="grid two">
+        <label>Pharmacy name<input id="phName" required placeholder="ABC Medical Store"></label>
+        <label>Area / city<input id="phArea" required placeholder="Narhe, Pune"></label>
+      </div>
+      <div class="grid two">
+        <label>Contact<input id="phPhone" required placeholder="+91 XXXXX XXXXX"></label>
+        <label>Operating hours<input id="phHours" required placeholder="08:00–22:00"></label>
+      </div>
+      <label>Available medicines <span class="hint">(comma separated)</span><input id="phMedicines" required placeholder="Paracetamol, ORS, Salbutamol"></label>
+      <label>Registration / licence reference<input id="phLicense" required placeholder="Demo reference — do not enter sensitive documents"></label>
+      <button class="primary wide" type="submit">Add Pharmacy to Prototype</button>
+    </form>
+  </div>
+</section>
+
+<section id="dashboard" class="section dashboard-section">
+  <div class="section-heading inline"><div><div class="eyebrow">OPERATIONS</div><h2>Emergency control center</h2></div><button class="secondary" onclick="resetDemo()">Reset demo data</button></div>
+  <div class="dashboard-grid">
+    <div class="panel"><h3>Live requests</h3><div id="requestList"></div></div>
+    <div class="panel"><h3>Drone mission simulator</h3><div id="missionBox" class="mission idle"><div class="drone-big">🚁</div><h3 id="missionTitle">No active mission</h3><p id="missionText">Create an emergency request to simulate coordination.</p><div class="progress"><i id="missionProgress"></i></div><button id="missionBtn" class="primary" disabled>Start simulation</button></div></div>
+  </div>
+</section>
+
+<section class="section safety">
+  <div class="safety-box"><h2>Safety & real-world deployment</h2><p>This prototype demonstrates coordination logic only. A production system should verify pharmacies and pharmacists, validate prescriptions where required, protect patient data, integrate authorized emergency services, and comply with applicable medicine-delivery and drone regulations.</p></div>
+</section>
+</main>
+
+<footer><b>MediDrone</b><span>Student Innovation Prototype • Emergency medicine coordination</span><span>© 2026</span></footer>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
